@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/tls"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -19,10 +18,6 @@ func main() {
 	if err := http.ListenAndServe(":9001", nil); err != nil {
 		log.Fatal("failed to start server", err)
 	}
-
-	res := postData(body)
-
-	fmt.Println("i can see you", string(res))
 }
 
 func (r Response) String() (s string) {
@@ -51,7 +46,7 @@ func processRequest(r *http.Request) string {
 	body = r.Form["body"]
 	fmt.Println(body)
 
-	result := putMas(body[0])
+	result := postData(body[0])
 	//	n := bytes.Index(result, []byte{0})
 	//return encode(body[0])
 	return string(result[:])
