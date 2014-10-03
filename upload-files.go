@@ -1,19 +1,14 @@
 package main
 
 import (
-	"crypto/tls"
-	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"github.com/go-martini/martini"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 )
 
 func check(e error) {
@@ -32,27 +27,7 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":8080", m))
 
-
 }
-
-func send(r *http.Request) {
-
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	fmt.Println(string(body))
-
-	var list Message
-
-	if err := json.Unmarshal(body, &list); err != nil {
-		panic(err)
-	}
-
-	fmt.Println(list.Message)
-}
-
 
 func retrieve(r *http.Request) {
 
@@ -71,7 +46,7 @@ func retrieve(r *http.Request) {
 	}
 
 	// read field
-	body := r.FormValue("alice")
+	body := r.FormValue("field")
 
 	fmt.Println(body)
 
@@ -104,4 +79,3 @@ func retrieve(r *http.Request) {
 
 	return
 }
-
